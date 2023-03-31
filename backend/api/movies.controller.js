@@ -1,6 +1,34 @@
 import moviesDAO from "../dao/moviesDAO.js";
 
 export default class MoviesController {
+    static async apiGetRatings(req, res, next) {
+        try {
+            let ratings = await moviesDAO.getRatings();
+            if (!ratings) {
+                console.log("No ratings found");
+                res.status(404).json({error: "Not found"});
+                return;
+            }
+            res.json(ratings);
+        } catch (e) {
+            console.log(`api, ${e}`);
+            res.status(500).json({error: e});
+        }
+    };
+    static async apiGetMovieById(req, res, next) {
+        try {
+            let id = req.params.id || {};
+            let movie = await moviesDAO.getMovieByID(id);
+            if (!movie) {
+                res.status(404).json({ error: "Not found" });
+                return;
+            }
+            res.json(movie);
+        } catch (e) {
+            console.log(`api, ${e}`);
+            res.status(500).json({ error: e });
+        }
+    };
     static async apiGetMovies(req, res, next) {
         const moviesPerPage = req.query.moviesPerPage ? parseInt(req.query.moviesPerPage, 10) : 20;
         const page = req.query.page ? parseInt(req.query.page, 10) : 0;

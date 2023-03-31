@@ -10,7 +10,6 @@ export default class ReviewsController {
                 _id: req.body.user_id,
             }
             const date = new Date()
-            console.log(req.body)
             const ReviewResponse = await reviewsDAO.addReview(
                 userInfo,
                 movieId,
