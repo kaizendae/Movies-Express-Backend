@@ -21,14 +21,16 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
+      working-directory: ./backend
       run: npm ci
 
-#     - name: Test
-#       run: npm test
+    #  - name: Test
+    #   run: npm test
     
     - name: Build and Deliver Docker Image
       uses: docker/build-push-action@v2
+      working-directory: ./backend
       with:
-        context: ./backend
+        context: .
         push: true
         tags: movies-backend:${{ github.run_number }}
