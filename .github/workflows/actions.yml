@@ -13,12 +13,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        path: ./backend
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: 14.x
         cache: 'npm'
+        path: ./backend
 
     - name: Install dependencies
       working-directory: ./backend
