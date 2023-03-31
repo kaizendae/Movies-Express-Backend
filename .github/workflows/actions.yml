@@ -26,11 +26,6 @@ jobs:
     - name: Dummy Test Step
       run: npm run test
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
-      with:
-        platforms: 'arm64,arm'
-
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
@@ -45,4 +40,5 @@ jobs:
       with:
         context: .
         push: true
+        platforms: linux/amd64,linux/arm/v8
         tags: random9deploy/movies-backend:${{ github.run_number }}
