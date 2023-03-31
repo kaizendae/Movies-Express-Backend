@@ -33,5 +33,4 @@ jobs:
         push: true
         tags: randomdeploy/movies-backend:${{ github.run_number }}
         username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
+        token: ${{ secrets.DOCKER_TOKEN }}
