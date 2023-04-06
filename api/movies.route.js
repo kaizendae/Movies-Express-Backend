@@ -9,4 +9,5 @@ router.route("/review").post(ReviewsController.apiPostReview).put(ReviewsControl
 router.route("/id/:id").get(MoviesController.apiGetMovieById);
 // return a list of movies with a specific genre e.g. G or PG or R.
 router.route("/ratings").get(MoviesController.apiGetRatings);
+
 export default router; // Export the router
