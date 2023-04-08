@@ -1,13 +1,11 @@
 import express from "express";
-import dotenv from "dotenv";
 import mongodb from "mongodb";
 const router = express.Router(); // Create a router
 
 router.get('/', async (_req, res, _next) => {
     // try connecting to db
-    dotenv.config();
     const uri = process.env.MOVIEREVIEWS_DB_URI;
-    const client = new mongodb.MongoClient(uri);
+    const client = new mongodb.MongoClient(uri, { serverSelectionTimeoutMS: 500 });
     let dbState = "__"
     let status = 200
     let message = "OK"
@@ -19,7 +17,7 @@ router.get('/', async (_req, res, _next) => {
     } catch (e) {
         dbState = "DOWN"
         status = 503
-        message = e
+        message = e.message
     }
     const healthcheck = {
         uptime: process.uptime(),
