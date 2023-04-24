@@ -16,6 +16,7 @@ async function main() {
         await ReviewsDAO.injectDB(client);
         console.log("Connected to MongoDB!")
         // Launch the server
+        console.log("Launching server...")
         await app.listen(port, () => { console.log(`Listening on port ${port}`); });
     } catch (e) {
         console.error(e);
@@ -23,5 +24,5 @@ async function main() {
     }
 }
 
-// main().catch(console.error);
-export default main;
+main().catch(console.error);
+// export default main;
