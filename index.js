@@ -23,5 +23,5 @@ async function main() {
     }
 }
 
-main().catch(console.error);
+// main().catch(console.error);
 export default main;
