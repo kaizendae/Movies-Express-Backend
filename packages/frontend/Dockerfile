@@ -1,31 +1,20 @@
-# Use the official Node.js runtime as the base image
-FROM node:18 as build
+# Start from the official Node.js image
+FROM node:21-alpine
 
-# Set the working directory in the container
+# Set the working directory in the Docker container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Copy the package.json and package-lock.json (if available) to leverage Docker caching
+COPY packages/frontend/package*.json ./
 
-# Install dependencies
+# Install project dependencies
 RUN npm install
 
-# Copy the entire application code to the container
+# Copy the rest of your application code
 COPY . .
 
-# Build the React app for production
-RUN npm run build
+# Expose the port your app runs on
+EXPOSE 3000
 
-# Use Nginx as the production server
-FROM nginx:alpine
-
-# Copy the built React app to Nginx's web server directory
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose port 80 for the Nginx server
-EXPOSE 80
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Start Nginx when the container runs
-CMD ["nginx", "-g", "daemon off;"]
+# Command to start the development server
+CMD ["npm", "run", "start"]
