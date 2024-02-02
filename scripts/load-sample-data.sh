@@ -12,7 +12,7 @@ if [ ! -z "$3" ]; then
     fi
 fi
 
-SAMPLE_DATA_FOLDER=${1:-../sample-data} # default server is the localhost
+SAMPLE_DATA_FOLDER=${1:-sample-data} # default folder is sample-data
 HOST=${2:-localhost} # default server is the localhost
 PORT=${3:-27017}     # default port for MongoDB is 27017
 

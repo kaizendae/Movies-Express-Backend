@@ -1,21 +1,35 @@
 version: '3'
 services:
   api:
-    image: sample-express-app
-    build: backend/.
+    image: movies-backend
+    build: packages/backend/.
+    environment:
+      - MOVIEREVIEWS_DB_URI=mongodb://db:27017/?retryWrites=true&w=majority
+      - MOVIEREVIEWS_NS=movies-database
+      - PORT=3000
+    entrypoint:
+      - npm
+      - run
+      - dev
     networks:
       - backend
     ports:
       - "3000:3000"
     volumes:
-      - ./backend/:/usr/src/app
+      - ./packages/backend/:/usr/src/app
+      - /usr/src/app/node_modules
 
-  web-cli:
-    image: sample-express-app
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
     networks:
       - backend
-    command: sh
+    volumes:
+      - mongodb_data:/data/db  # Persist MongoDB data to a named volume
 
 networks:
   backend:
     driver: bridge
+volumes:
+  mongodb_data:
