@@ -1,12 +1,26 @@
 version: '3'
 services:
+  frontend:
+    image: movies-frontend
+    build:
+      context: .
+      dockerfile: packages/frontend/Dockerfile
+    volumes:
+      - ./packages/frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_BASE_URL=http://localhost:5001
+    networks:
+      - backend
   api:
     image: movies-backend
     build: packages/backend/.
     environment:
       - MOVIEREVIEWS_DB_URI=mongodb://db:27017/?retryWrites=true&w=majority
       - MOVIEREVIEWS_NS=movies-database
-      - PORT=3000
+      - PORT=5001
     entrypoint:
       - npm
       - run
@@ -14,7 +28,7 @@ services:
     networks:
       - backend
     ports:
-      - "3000:3000"
+      - "5001:5001"
     volumes:
       - ./packages/backend/:/usr/src/app
       - /usr/src/app/node_modules
